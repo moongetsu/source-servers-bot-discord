@@ -39,7 +39,7 @@ screen python3 main.py
 ## Installation of dependencies (Pterodactyl Panel)
 
 ```
-Add in the start-up: 
+Add in the start-up/additional python changes: 
 python-a2s discord.py==1.7.3 asyncio colorama
 ```
 # License
