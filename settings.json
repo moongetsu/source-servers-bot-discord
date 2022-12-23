@@ -2,8 +2,10 @@
     "settings": 
     [
         {
-            "bot-token": "",
-            "refresh-time": 60
+            "bot-token": "TOKEN",
+            "refresh-time": 10,
+            "community-name": "EliteGamers",
+            "prefix": "!"
         }
     ]
 }
