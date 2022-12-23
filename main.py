@@ -44,7 +44,7 @@ bot = commands.Bot(f"{PREFIX}", intents=intents)
 bot.remove_command('help')
 
 # dont change
-VERSION = "1.0b"
+VERSION = "0.1b"
 
 @bot.event
 async def on_ready():
