@@ -1,12 +1,5 @@
-# source-servers-monitor-discord
-source-servers-monitor-discord
-
 # What does this do?
 This is a discord bot that counts number of connected players/map played on your source servers, with some useful commands.
-
-# How does this look like on discord
-
-![This is an image](https://i.imgur.com/qbFtS11.png)
 
 # Ways of working
 
