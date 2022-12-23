@@ -178,7 +178,7 @@ async def servers(ctx):
             player_count = "Error querying server"
             player_max = "Error querying server"
         embed.add_field(name=f"`{name}`", value=f"IP/DNS: **{ip}:{port}** (*{player_count}/{player_max}*)", inline=False)
-    await ctx.send(embed=embed)
+    await ctx.reply(embed=embed, mention_author=False)
 
 
 # Server Info
@@ -227,6 +227,6 @@ async def help(ctx):
     embed.add_field(name=":page_with_curl: | servers", value="See the servers from our community.", inline=False)
     embed.add_field(name=":chart_with_upwards_trend: | serverinfo `<serverip>`", value="Sends info about a server from the servers list.", inline=False)
     embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v1.0b)")
-    await ctx.send(embed=embed)
+    await ctx.reply(embed=embed, mention_author=False)
 
 bot.run(TOKEN)
