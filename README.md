@@ -1,3 +1,21 @@
+Fork at https://github.com/xSL0W/source-servers-monitor-discord, with some changes.
+
+# What's different?
+
+source-servers-monitor-discord:
+```
+Status showing the players connected to the server together with the map they are playing on).
+Status showing connected players on all servers.
+```
+source-servers-bot-discord
+```
+Status showing the players connected to the server together with the map they are playing on).
+Changing Status, which shows each server separately, it changes once every 60 seconds (as set in settings.json).
+Help command (shows the commands the bot has)
+Server order (show the servers from servers.cfg in an embed, along with the number of players in parentheses)
+The serverinfo command (shows information about a server from servers.cfg: hostname, ip, map, number of players along with a banner on gametracker)
+```
+
 # What does this do?
 This is a discord bot that counts number of connected players/map played on your source servers, with some useful commands.
 
