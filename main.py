@@ -11,10 +11,10 @@
 #   https://github.com/xSL0W? & https://github.com/moongetsu/
 
 # libraries
-import discord
-from discord.ext import tasks
-from discord.errors import InvalidArgument
-from discord.ext import commands
+import nextcord
+from nextcord.ext import tasks
+from nextcord.errors import InvalidArgument
+from nextcord.ext import commands
 import a2s
 import socket
 import asyncio
@@ -38,7 +38,7 @@ with open('settings.json') as json_file:
         PREFIX = p['prefix']
 
 # Prefix & Intents
-intents = discord.Intents.all()
+intents = nextcord.Intents.all()
 bot = commands.Bot(f"{PREFIX}", intents=intents)
 
 bot.remove_command('help')
@@ -60,7 +60,7 @@ async def on_ready():
     print(f'The host has been connected to {bot.user.name}')
     print(f'The ID of the bot is: {bot.user.id}')
     print(f"Python version: {platform.python_version()}")
-    print(f"Discord.py version: {discord.__version__}")
+    print(f"nextcord.py version: {nextcord.__version__}")
     print(f"The bot runs on: {platform.system()} {platform.release()} ({os.name})")
     print(f"------------------------------------------------------------------------------------------------------------------------------------------")
     loop_renew_status.start()
@@ -97,9 +97,9 @@ async def loop_renew_status():
         await asyncio.sleep(REFRESH_TIME)
 
 async def SetDiscordStatus(status = ""):
-    activity = discord.Game(name=status, type=3)
+    activity = nextcord.Game(name=status, type=3)
     try:
-        await bot.change_presence(status=discord.Status.do_not_disturb, activity=activity)
+        await bot.change_presence(status=nextcord.Status.do_not_disturb, activity=activity)
     except InvalidArgument:
         print("Exception: Invalid argument")
         pass
@@ -162,7 +162,7 @@ async def servers(ctx):
                 name = "Unnamed server"
             servers.append((ip, port, name.rstrip()))
     
-    embed = discord.Embed(title=f"{COMMUNITY_NAME}'s Servers", color=0x000000)
+    embed = nextcord.Embed(title=f"{COMMUNITY_NAME}'s Servers", color=0x000000)
 
     guild = ctx.guild
 
@@ -193,7 +193,7 @@ async def serverinfo(ctx, server_ip: str, server_port: int = 27015):
                 found = True
                 break
     if not found:
-        embed = discord.Embed(title="Error 👀", description=f"`{server_ip}` cannot be found in `servers.cfg` file.", color=0xff0000)
+        embed = nextcord.Embed(title="Error 👀", description=f"`{server_ip}` cannot be found in `servers.cfg` file.", color=0xff0000)
         embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v2 beta)")
         await ctx.reply(embed=embed, mention_author=False)
         return
@@ -207,7 +207,7 @@ async def serverinfo(ctx, server_ip: str, server_port: int = 27015):
     guild = ctx.guild
     
     banner_url = f"https://cache.gametracker.com/server_info/{server_ip}:{server_port}/b_560_95_1.png"
-    embed = discord.Embed(title=csquery.server_name, description=f"steam://connect/{server_ip}:{port}", color=0x00000)
+    embed = nextcord.Embed(title=csquery.server_name, description=f"steam://connect/{server_ip}:{port}", color=0x00000)
     embed.set_author(name=guild.name, icon_url=guild.icon_url)
     embed.set_image(url=banner_url)
     embed.add_field(name="IP/DNS 🌍", value="```{}```".format(server_ip))
@@ -222,7 +222,7 @@ async def serverinfo(ctx, server_ip: str, server_port: int = 27015):
 async def help(ctx):
     guild = ctx.guild
 
-    embed = discord.Embed(title=f"Source Servers Bot Commands", color=0x000000)
+    embed = nextcord.Embed(title=f"Source Servers Bot Commands", color=0x000000)
     embed.set_author(name=guild.name, icon_url=guild.icon_url)
     embed.add_field(name=":page_with_curl: | servers", value="See the servers from our community.", inline=False)
     embed.add_field(name=":chart_with_upwards_trend: | serverinfo `<serverip>`", value="Sends info about a server from the servers list.", inline=False)
