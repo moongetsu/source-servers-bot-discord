@@ -148,8 +148,11 @@ def GenerateStatus():
 
 #----------------------------------------Commands-----------------------------------------
 # Servers
-@bot.command(name='servers', help='Displays the IP addresses and server names of the servers in servers.cfg')
-async def servers(ctx):
+@bot.slash_command(
+    name="servers",
+    description="Displays the IP addresses and server names of the servers in servers.cfg.",
+)
+async def servers(Interaction):
     with open("servers.cfg", "r") as f:
         servers = []
         for line in f:
@@ -164,9 +167,9 @@ async def servers(ctx):
     
     embed = nextcord.Embed(title=f"{COMMUNITY_NAME}'s Servers", color=0x000000)
 
-    guild = ctx.guild
+    guild = Interaction.guild
 
-    embed.set_author(name=guild.name, icon_url=guild.icon_url)
+    embed.set_author(name=guild.name, icon_url=guild.icon.url)
     embed.set_footer(text=f"Use {PREFIX}serverinfo to see the info about a server")
     for i, (ip, port, name) in enumerate(servers):
         address = (ip, int(port))
@@ -178,12 +181,15 @@ async def servers(ctx):
             player_count = "Error querying server"
             player_max = "Error querying server"
         embed.add_field(name=f"`{name}`", value=f"IP/DNS: **{ip}:{port}** (*{player_count}/{player_max}*)", inline=False)
-    await ctx.reply(embed=embed, mention_author=False)
+    await Interaction.send(embed=embed)
 
 
 # Server Info
-@bot.command()
-async def serverinfo(ctx, server_ip: str, server_port: int = 27015):
+@bot.slash_command(
+    name="serverinfo",
+    description="Shows info about a server from server.cfg.",
+)
+async def serverinfo(Interaction, server_ip: str, server_port: int = 27015):
     found = False
     with open("servers.cfg", "r") as f:
         for line in f:
@@ -195,38 +201,41 @@ async def serverinfo(ctx, server_ip: str, server_port: int = 27015):
     if not found:
         embed = nextcord.Embed(title="Error 👀", description=f"`{server_ip}` cannot be found in `servers.cfg` file.", color=0xff0000)
         embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v2 beta)")
-        await ctx.reply(embed=embed, mention_author=False)
+        await Interaction.send(embed=embed)
         return
     address = (server_ip, server_port)
     try:
         csquery = a2s.info(address)
     except (socket.gaierror, a2s.BrokenMessageError, a2s.BufferExhaustedError, asyncio.exceptions.TimeoutError, socket.timeout, ConnectionRefusedError, OSError) as e:
-        await ctx.reply("Error querying server: {}".format(e))
+        await Interaction.send("Error querying server: {}".format(e))
         return
 
-    guild = ctx.guild
+    guild = Interaction.guild
     
     banner_url = f"https://cache.gametracker.com/server_info/{server_ip}:{server_port}/b_560_95_1.png"
     embed = nextcord.Embed(title=csquery.server_name, description=f"steam://connect/{server_ip}:{port}", color=0x00000)
-    embed.set_author(name=guild.name, icon_url=guild.icon_url)
+    embed.set_author(name=guild.name, icon_url=guild.icon.url)
     embed.set_image(url=banner_url)
     embed.add_field(name="IP/DNS 🌍", value="```{}```".format(server_ip))
     embed.add_field(name="Current Map 🗺️", value=f"```{csquery.map_name}```")
     embed.add_field(name="Current players 🛡️", value="```{}/{}```".format(csquery.player_count, csquery.max_players))
     embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v1.0b)")
 
-    await ctx.reply(embed=embed, mention_author=False)
+    await Interaction.send(embed=embed)
 
 # Help
-@bot.command()
-async def help(ctx):
-    guild = ctx.guild
+@bot.slash_command(
+    name="help",
+    description="Display the commands that the bot has.",
+)
+async def help(Interaction):
+    guild = Interaction.guild
 
     embed = nextcord.Embed(title=f"Source Servers Bot Commands", color=0x000000)
-    embed.set_author(name=guild.name, icon_url=guild.icon_url)
+    embed.set_author(name=guild.name, icon_url=guild.icon.url)
     embed.add_field(name=":page_with_curl: | servers", value="See the servers from our community.", inline=False)
     embed.add_field(name=":chart_with_upwards_trend: | serverinfo `<serverip>`", value="Sends info about a server from the servers list.", inline=False)
     embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v1.0b)")
-    await ctx.reply(embed=embed, mention_author=False)
+    await Interaction.send(embed=embed)
 
 bot.run(TOKEN)
