@@ -44,7 +44,7 @@ bot = commands.Bot(f"{PREFIX}", intents=intents)
 bot.remove_command('help')
 
 # dont change
-VERSION = "0.1b"
+VERSION = "0.3b"
 
 @bot.event
 async def on_ready():
@@ -200,7 +200,7 @@ async def serverinfo(Interaction, server_ip: str, server_port: int = 27015):
                 break
     if not found:
         embed = nextcord.Embed(title="Error 👀", description=f"`{server_ip}` cannot be found in `servers.cfg` file.", color=0xff0000)
-        embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v2 beta)")
+        embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v0.3b)")
         await Interaction.send(embed=embed)
         return
     address = (server_ip, server_port)
@@ -219,7 +219,7 @@ async def serverinfo(Interaction, server_ip: str, server_port: int = 27015):
     embed.add_field(name="IP/DNS 🌍", value="```{}```".format(server_ip))
     embed.add_field(name="Current Map 🗺️", value=f"```{csquery.map_name}```")
     embed.add_field(name="Current players 🛡️", value="```{}/{}```".format(csquery.player_count, csquery.max_players))
-    embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v1.0b)")
+    embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v0.3b)")
 
     await Interaction.send(embed=embed)
 
@@ -235,7 +235,7 @@ async def help(Interaction):
     embed.set_author(name=guild.name, icon_url=guild.icon.url)
     embed.add_field(name=":page_with_curl: | servers", value="See the servers from our community.", inline=False)
     embed.add_field(name=":chart_with_upwards_trend: | serverinfo `<serverip>`", value="Sends info about a server from the servers list.", inline=False)
-    embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v1.0b)")
+    embed.set_footer(text="© Moongetsu Systems™ (2020-2022) | Source Servers Bot (v0.3b)")
     await Interaction.send(embed=embed)
 
 bot.run(TOKEN)
